@@ -1,0 +1,99 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Coiny' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <style>
+        .centered{
+            text-align: center,
+            margin-left:auto,
+            margin-right:auto,
+        }
+    </style>
+    <nav class="nav navbar-default navbar-inverse">
+        <ul class="nav navbar-nav">
+        {% if user != None %}
+            <a class="navbar-brand text-danger" href="#">{{user.username}}</a>
+            <li class="navbar-nav"><a href="#" data-toggle="modal" data-target="#addblog">Add Blog</a></li>
+        {%endif%}
+            <li><a href="" data-toggle="modal" data-target="#log">Login</a></li>
+            <li><a href="register/" class="pull-left">Register</a></li>
+        </ul>
+
+    </nav>
+
+
+    
+        
+        <div class="col-sm-4"> 
+            <h1>Blog Articles</h1>
+        
+            <div class="blog content">
+                {% for blog in blogs %}
+                <div>
+                <h3 class="text-success">{{blog.title}}</h3><br>
+                <small>{{blog.author}}</small>
+                </div>
+                 <div>{{blog.blog_content}}</div>
+                {%endfor%}
+            
+            </div>
+        </div>
+            
+
+
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="log">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+                <div class="modal-header"><a class="close" data-dismiss="modal">&times;</a></div>
+            <form method="post">
+                {% csrf_token%}
+                <div class="modal-body">
+                    <b>Username :</b><input type="text" class="form-control" name="username">
+                    <b>Password :</b><input type="password" class="form-control" name="password">
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success pull-left"  value="Login"/>
+                    
+                </div>
+            </form>
+          </div>
+          
+        </div>      
+    </div>
+
+
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="addblog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                    <div class="modal-header"><a class="close" data-dismiss="modal">&times;</a></div>
+                <form action="/addblog/" method="post">
+                    {% csrf_token%}
+                    <div class="modal-body">
+                        <b>Blog Title :</b><input class="form-control" name="title">
+                        <b>Blog Content :</b><input  class="form-control" name="blog_content">
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success pull-left"  value="Upload"/>
+                        
+                    </div>
+                </form>
+              </div>
+              
+            </div>      
+        </div>
+
+
+</body>
+</html>
